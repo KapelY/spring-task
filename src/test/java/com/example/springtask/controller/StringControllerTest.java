@@ -26,11 +26,8 @@ import java.util.Collections;
 import static com.example.springtask.controller.StringController.CANNOT_BE_EMPTY;
 import static com.example.springtask.service.CRUDServiceImpl.Storage;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest
