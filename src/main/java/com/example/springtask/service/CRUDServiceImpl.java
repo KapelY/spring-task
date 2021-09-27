@@ -30,7 +30,7 @@ public class CRUDServiceImpl implements CRUDService{
 
     @Override
     public Integer getAmount() {
-        return getAll().size();
+        return stringRepository.size();
     }
 
     @Override
@@ -44,5 +44,6 @@ public class CRUDServiceImpl implements CRUDService{
     @Data
     public static class Storage {
         private List<String> array = new LinkedList<>();
+        public Integer size() {return array.size();}
     }
 }

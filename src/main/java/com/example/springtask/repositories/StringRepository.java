@@ -7,4 +7,6 @@ public interface StringRepository {
     void addAll(List<String> list);
 
     List<String> getAll();
+
+    Integer size();
 }

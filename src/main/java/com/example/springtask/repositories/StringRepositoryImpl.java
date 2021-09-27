@@ -1,16 +1,17 @@
 package com.example.springtask.repositories;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 @Repository
 public class StringRepositoryImpl implements StringRepository {
     private final Queue<String> storage;
 
-    @Autowired
     public StringRepositoryImpl() {
         this.storage = new ConcurrentLinkedQueue<>();
     }
@@ -23,5 +24,10 @@ public class StringRepositoryImpl implements StringRepository {
     @Override
     public List<String> getAll() {
         return new ArrayList<>(storage);
+    }
+
+    @Override
+    public Integer size() {
+        return storage.size();
     }
 }
