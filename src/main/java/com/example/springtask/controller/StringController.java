@@ -12,11 +12,14 @@ import static com.example.springtask.service.CRUDServiceImpl.Storage;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Slf4j
-@RestController()
-@RequestMapping("/")
+@RestController
+@RequestMapping
 public class StringController {
     public final static String CANNOT_BE_EMPTY = "array cannot be empty";
     public final static String EMPTY_ARRAY_INCOMING = "Empty array path=/append";
+    public final static String PUT_STORAGE = "/managed-strings";
+    public final static String ADD_RETURN_STORAGE = "/managed-strings/storage";
+    public final static String GET_STORAGE_SIZE = "/managed-strings/size";
 
     private final CRUDService crudService;
 
@@ -25,7 +28,7 @@ public class StringController {
         this.crudService = crudService;
     }
 
-    @PutMapping(path = "/append", consumes = APPLICATION_JSON_VALUE)
+    @PutMapping(path = PUT_STORAGE, consumes = APPLICATION_JSON_VALUE)
     public void appendData(@RequestBody Storage storage) {
 
         if (storage.getArray().isEmpty()) {
@@ -35,12 +38,12 @@ public class StringController {
             crudService.addAll(storage);
     }
 
-    @PostMapping(path = "/add", consumes = APPLICATION_JSON_VALUE)
+    @PostMapping(path = ADD_RETURN_STORAGE, consumes = APPLICATION_JSON_VALUE)
     public Storage getData(@RequestBody Storage storage) {
         return crudService.addAndReturn(storage);
     }
 
-    @GetMapping(path = "/amount")
+    @GetMapping(path = GET_STORAGE_SIZE)
     public Integer getAmountOfStrings() {
         return crudService.getAmount();
     }

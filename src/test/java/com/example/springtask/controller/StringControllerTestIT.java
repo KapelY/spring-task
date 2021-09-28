@@ -26,7 +26,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Collections;
 
-import static com.example.springtask.controller.StringController.CANNOT_BE_EMPTY;
+import static com.example.springtask.controller.StringController.*;
 import static com.example.springtask.service.CRUDServiceImpl.Storage;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -65,11 +65,11 @@ public class StringControllerTestIT {
     }
 
     @Test
-    @DisplayName("When call '/append' then storage must have correct size & content")
+    @DisplayName("When call PUT_STORAGE then storage must have correct size & content")
     public void whenDataAppendOK() throws Exception {
         assertThat(crudService.getAmount().equals(0)).isTrue();
 
-        this.mvc.perform(put("/append")
+        this.mvc.perform(put(PUT_STORAGE)
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(PARAM_STRING))
                 .andExpect(status().isOk())
@@ -80,9 +80,9 @@ public class StringControllerTestIT {
     }
 
     @Test
-    @DisplayName("When call '/append' fails then storage must contain empty List<String>")
+    @DisplayName("When call PUT_STORAGE fails then storage must contain empty List<String>")
     public void whenDataAppendFail() throws Exception {
-        this.mvc.perform(MockMvcRequestBuilders.put("/append")
+        this.mvc.perform(MockMvcRequestBuilders.put(PUT_STORAGE)
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(BAD_PARAM_STRING))
                 .andExpect(status().isBadRequest())
@@ -93,21 +93,22 @@ public class StringControllerTestIT {
     }
 
     @Test
-    @DisplayName("When request contains empty array like {'array':[]} then custom exception is thrown")
+    @DisplayName("When call PUT_STORAGE contains empty array like {'array':[]} then custom exception is thrown")
     void whenExceptionIsThrown() {
         assertThatThrownBy(() -> mvc
-                .perform(put("/append").contentType(MediaType.APPLICATION_JSON_VALUE)
+                .perform(put(PUT_STORAGE).contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(BAD_PARAM_STRING4)))
                 .hasCause(new CustomException(CANNOT_BE_EMPTY, HttpStatus.BAD_REQUEST));
     }
 
     @Test
-    @DisplayName("When call '/add' then storage has correct size(no changes) & content(no changes) & response (storage + income)")
+    @DisplayName("When call ADD_RETURN_STORAGE then storage has correct size(no changes) " +
+            "& content(no changes) & response (storage + income)")
     void whenDataAddOk() throws Exception {
         crudService.addAll(setUpDefault());
         assertThat(crudService.getAmount().equals(4)).isTrue();
 
-        this.mvc.perform(MockMvcRequestBuilders.post("/add")
+        this.mvc.perform(MockMvcRequestBuilders.post(ADD_RETURN_STORAGE)
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(PARAM_STRING3))
                 .andDo(print())
@@ -120,9 +121,9 @@ public class StringControllerTestIT {
     }
 
     @Test
-    @DisplayName("When call '/add' fails then storage must contain empty List<String>")
+    @DisplayName("When call ADD_RETURN_STORAGE fails then storage must contain empty List<String>")
     void whenDataAddFails() throws Exception {
-        this.mvc.perform(MockMvcRequestBuilders.post("/add")
+        this.mvc.perform(MockMvcRequestBuilders.post(ADD_RETURN_STORAGE)
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(BAD_PARAM_STRING2))
                 .andExpect(status().isBadRequest())
@@ -133,11 +134,11 @@ public class StringControllerTestIT {
     }
 
     @Test
-    @DisplayName("When call '/amount' then return correct array size of 4")
+    @DisplayName("When call GET_STORAGE_SIZE then return correct array size of 4")
     void getAmountOfStrings() throws Exception {
         crudService.addAll(setUpDefault());
 
-        MvcResult result = mvc.perform(MockMvcRequestBuilders.get("/amount"))
+        MvcResult result = mvc.perform(MockMvcRequestBuilders.get(GET_STORAGE_SIZE))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(status().is2xxSuccessful())
