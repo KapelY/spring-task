@@ -4,7 +4,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -18,7 +17,7 @@ public class StringRepositoryImpl implements StringRepository {
 
     @Override
     public void addAll(List<String> list) {
-        Optional.of(list).ifPresent(this.storage::addAll);
+        storage.addAll(list);
     }
 
     @Override
@@ -29,5 +28,10 @@ public class StringRepositoryImpl implements StringRepository {
     @Override
     public Integer size() {
         return storage.size();
+    }
+
+    @Override
+    public void clear() {
+        storage.clear();
     }
 }

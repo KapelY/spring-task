@@ -9,4 +9,6 @@ public interface StringRepository {
     List<String> getAll();
 
     Integer size();
+
+    void clear();
 }
